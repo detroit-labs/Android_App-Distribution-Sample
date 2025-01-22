@@ -20,11 +20,26 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BUILD_LABEL", "\"Release build\"")
+        }
+
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            isDebuggable = true
+            buildConfigField("String", "BUILD_LABEL", "\"Debug build\"")
+        }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".debugStaging"
+            buildConfigField("String", "BUILD_LABEL", "\"Staging build\"")
         }
     }
     compileOptions {
@@ -36,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
