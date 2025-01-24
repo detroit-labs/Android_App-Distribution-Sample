@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -23,12 +24,12 @@ class MainActivity : ComponentActivity() {
             AppDistributionSampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(innerPadding),
                         contentAlignment = Alignment.Center
                     ) {
                         Greeting(
-                            name = BuildConfig.BUILD_LABEL,
-                            modifier = Modifier.padding(innerPadding)
+                            buildType = BuildConfig.BUILD_LABEL,
+                            baseUrl = BuildConfig.API_BASE_URL
                         )
                     }
                 }
@@ -38,17 +39,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun Greeting(buildType: String, baseUrl: String) {
+    Column {
+        Text(text = "Build type: $buildType")
+        Text(text = "API base URL: $baseUrl")
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AppDistributionSampleTheme {
-        Greeting("Android")
+        Greeting("[build type]", "[base URL]")
     }
 }
