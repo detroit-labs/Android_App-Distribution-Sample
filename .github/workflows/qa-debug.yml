@@ -23,6 +23,6 @@ jobs:
     - name: upload artifact to Firebase App Distribution
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
-        firebaseServiceAccount: "${{ secrets.GOOGLE_SERVICES_JSON }}" 
-        projectId: "${{ secrets.FIREBASE_APP_ID }}" 
-        file: app/build/outputs/apk/qa/app-qa.apk
+        firebaseServiceAccount: "${{secrets.GOOGLE_SERVICES_JSON}}" 
+        projectId: "${{secrets.FIREBASE_APP_ID}}" 
+        file: app/build/outputs/apk/qa/app-qa.apk     
