@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "493298182460",
+    "project_id": "poc-mobile-deployment",
+    "storage_bucket": "poc-mobile-deployment.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493298182460:android:6422ef142abb03b0261639",
+        "android_client_info": {
+          "package_name": "com.detroitlabs.appdistributionsample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB48VpOEULnaRWm_NaK0MgGncXyAV9cyAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
