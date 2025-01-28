@@ -21,8 +21,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleQa
     - name: upload artifact to Firebase App Distribution
-      uses: FirebaseExtended/action-hosting-deploy@v0
+      uses: wzieba/Firebase-Distribution-Github-Action@v1.5.1
       with:
-        firebaseServiceAccount: "${{secrets.GOOGLE_SERVICES_JSON}}" 
-        projectId: "${{secrets.FIREBASE_APP_ID}}" 
-        file: app/build/outputs/apk/qa/app-qa.apk     
+        appId: ${{secrets.FIREBASE_APP_ID}}
+        serviceCredentialsFileContent: ${{ secrets.GOOGLE_SERVICES_JSON }}      
+        groups: testers
+        file: app/build/outputs/apk/qa/app-qa.apk
