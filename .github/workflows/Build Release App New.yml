@@ -6,6 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: qa-debug
 
     steps:
     - uses: actions/checkout@v4
@@ -32,10 +33,6 @@ jobs:
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-      run: ./gradlew assembleRelease
-
-    - name: Upload Release Build to Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-artifacts
-        path: app/build/outputs/
+        FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
+        GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      run: ./gradlew bundleRelease appDistributionUploadRelease
