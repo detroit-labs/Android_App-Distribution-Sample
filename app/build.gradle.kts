@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.firebase.appdistribution)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -103,6 +105,11 @@ android {
             buildConfigField("String", "BUILD_LABEL", "\"Release build\"")
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
+            firebaseAppDistribution {
+                artifactType = "AAB"
+                appId = System.getenv("FIREBASE_APP_ID")
+                serviceCredentialsFile = System.getenv("GOOGLE_SERVICES_JSON")
+            }
         }
     }
     compileOptions {
