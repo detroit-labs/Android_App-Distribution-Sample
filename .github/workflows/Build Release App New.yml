@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: qa-debug
+    environment: prod
 
     steps:
     - uses: actions/checkout@v4
