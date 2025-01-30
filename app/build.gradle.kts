@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.firebase.appdistribution)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -20,6 +22,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore.jks")
+            storePassword = System.getenv("SIGNING_KEY_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_STORE_PASSWORD")
+        }
     }
 
     /*
@@ -77,6 +88,11 @@ android {
         create("production") {
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
+            firebaseAppDistribution {
+                artifactType = "APK"
+                appId = System.getenv("FIREBASE_APP_ID")
+                serviceCredentialsFile = System.getenv("GOOGLE_SERVICES_JSON")
+            }
         }
     }
     compileOptions {
