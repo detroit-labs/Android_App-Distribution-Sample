@@ -25,7 +25,7 @@ jobs:
       run: |
           tmp_keystore_directory="${RUNNER_TEMP}"/keystore
           mkdir "${tmp_keystore_directory}"
-          echo $ENCODED_KEYSTORE | base64 -D > "${tmp_keystore_directory}"/keystore.jks
+          echo $ENCODED_KEYSTORE | base64 -d > "${tmp_keystore_directory}"/keystore.jks
           echo "SIGNING_KEYSTORE_FILE_PATH="${tmp_keystore_directory}"/keystore.jks" >> $GITHUB_ENV           
 
     - name: Build Release apk
