@@ -26,9 +26,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:493298182460:android:2f4701d99485aeed261639",
+        "mobilesdk_app_id": "1:493298182460:android:59e3acb8744295ec261639",
         "android_client_info": {
-          "package_name": "com.detroitlabs.appdistributionsample.qa"
+          "package_name": "com.detroitlabs.appdistributionsample.development"
         }
       },
       "oauth_client": [],
@@ -45,9 +45,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:493298182460:android:2893373c807dfd6c261639",
+        "mobilesdk_app_id": "1:493298182460:android:93830f66ab89de1f261639",
         "android_client_info": {
-          "package_name": "com.detroitlabs.appdistributionsample.qaprod"
+          "package_name": "com.detroitlabs.appdistributionsample.development.debug"
         }
       },
       "oauth_client": [],
