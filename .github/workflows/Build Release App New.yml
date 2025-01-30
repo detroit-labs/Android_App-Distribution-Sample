@@ -44,4 +44,4 @@ jobs:
       env:
         GOOGLE_SERVICES_JSON: "firebase-app-distribution.json"
         FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"  
-      run: ./gradlew appDistributionUploadRelease --artifactPath="app/build/outputs/apk/release/app-release.apk"  
+      run: ./gradlew appDistributionUploadRelease
