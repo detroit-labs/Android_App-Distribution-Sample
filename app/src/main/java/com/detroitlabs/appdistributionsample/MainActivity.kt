@@ -28,8 +28,11 @@ class MainActivity : ComponentActivity() {
                         contentAlignment = Alignment.Center
                     ) {
                         Greeting(
-                            buildType = BuildConfig.BUILD_LABEL,
-                            baseUrl = BuildConfig.API_BASE_URL
+                            productFlavor = BuildConfig.FLAVOR,
+                            buildType = BuildConfig.BUILD_TYPE,
+                            applicationId = BuildConfig.APPLICATION_ID,
+                            baseUrl = BuildConfig.API_BASE_URL,
+                            apiKey = BuildConfig.API_KEY
                         )
                     }
                 }
@@ -39,10 +42,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(buildType: String, baseUrl: String) {
+fun Greeting(productFlavor: String, buildType: String, applicationId: String, baseUrl: String, apiKey: String) {
     Column {
+        Text(text = "Product flavor: $productFlavor")
         Text(text = "Build type: $buildType")
+        Text(text = "Build variant: $productFlavor${buildType.replaceFirstChar(Char::titlecase)}")
+        Text(text = "Application ID: $applicationId")
         Text(text = "API base URL: $baseUrl")
+        Text(text = "API key: $apiKey")
     }
 }
 
@@ -50,6 +57,6 @@ fun Greeting(buildType: String, baseUrl: String) {
 @Composable
 fun GreetingPreview() {
     AppDistributionSampleTheme {
-        Greeting("[build type]", "[base URL]")
+        Greeting("[product flavor]", "[build type]", "[application ID]", "[base URL]", "[API key]")
     }
 }

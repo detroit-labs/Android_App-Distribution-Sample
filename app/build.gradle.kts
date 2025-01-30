@@ -10,7 +10,9 @@ android {
     namespace = "com.detroitlabs.appdistributionsample"
     compileSdk = 35
 
-    defaultConfig {
+    defaultConfig { // Here we specify the base configuration for all flavors defined below.
+        // The application ID uniquely identifies your app on the device and in the Google Play
+        // Store.
         applicationId = "com.detroitlabs.appdistributionsample"
         minSdk = 24
         targetSdk = 35
@@ -28,70 +30,51 @@ android {
     production.api.key=production_api_key_here
     */
 
-    // Load API keys from "local.properties":
+    // Load API keys from "local.properties".
     // ("gradleLocalProperties" is a built-in function of the Android Gradle plugin.)
     val properties = gradleLocalProperties(rootDir, providers)
     val debugApiKey = properties.getProperty("debug.api.key") ?: ""
     val productionApiKey = properties.getProperty("production.api.key") ?: ""
 
     buildTypes {
-        // 1. Debug build pointing to the debug API:
         debug {
+            // Enable debug features.
+            isDebuggable = true
             // Unique suffixes allow installation of multiple variants on the same device.
-            // (These may be decided by the team; what we present here is a suggestion.)
+            // Note that we specify additional suffixes where we define flavors below - those
+            // suffixes are applied first.
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
-            // Enable debug features:
-            isDebuggable = true
-            // The "buildConfigField" function adds constants to the "BuildConfig" class.
-            // Note that the third argument has inner (escaped) double quotes. The inner quotes
-            // correspond to the quotes that will appear around the string in the generated code for
-            // the "BuildConfig" class.
-            buildConfigField("String", "BUILD_LABEL", "\"Debug build pointing to debug\"")
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api-debug\"")
-            buildConfigField("String", "API_KEY", "\"${debugApiKey}\"")
         }
 
-        // 2. Debug build pointing to the production API:
-        create("debugProd") {
-            initWith(getByName("debug")) // Inherit the properties of the "debug" build variant defined above.
-            applicationIdSuffix = ".debugprod"
-            versionNameSuffix = "-debugprod"
-            buildConfigField("String", "BUILD_LABEL", "\"Debug build pointing to prod\"")
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
-            buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
-        }
-
-        // 3. QA build pointing to the debug API:
-        create("qa") {
-            initWith(getByName("debug"))
-            applicationIdSuffix = ".qa"
-            versionNameSuffix = "-qa"
-            buildConfigField("String", "BUILD_LABEL", "\"QA build pointing to debug\"")
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api-debug\"")
-            buildConfigField("String", "API_KEY", "\"${debugApiKey}\"")
-        }
-
-        // 4. QA build pointing to production API:
-        create("qaProd") {
-            initWith(getByName("debug"))
-            applicationIdSuffix = ".qaprod"
-            versionNameSuffix = "-qaprod"
-            buildConfigField("String", "BUILD_LABEL", "\"QA build pointing to prod\"")
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
-            buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
-        }
-
-        // 5. Release build:
         release {
-            // Enable R8 (the code optimizer and obfuscator):
+            isDebuggable = false
+            // Enable R8 (the code optimizer and obfuscator).
             isMinifyEnabled = true
-            // Remove unused resources and layouts:
+            // Remove unused resources and layouts.
             isShrinkResources = true
             // R8 became the default optimizer and obfuscator in 2019, replacing Proguard. It still
             // uses Proguard configuration files.
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "BUILD_LABEL", "\"Release build\"")
+        }
+    }
+    // You must specify a flavor dimension. By default, the flavors defined below will belong to
+    // this dimension.
+    flavorDimensions += "environment"
+    productFlavors {
+        create("development") {
+            // These suffixes are applied before the suffixes specified in the "buildTypes" block
+            // above.
+            applicationIdSuffix = ".development"
+            versionNameSuffix = "-development"
+            // The "buildConfigField" function adds constants to the "BuildConfig" class.
+            // Note that the third argument has inner (escaped) double quotes. The inner quotes
+            // correspond to the quotes that will appear around the string in the generated code for
+            // the "BuildConfig" class.
+            buildConfigField("String", "API_BASE_URL", "\"https://my-api-debug\"")
+            buildConfigField("String", "API_KEY", "\"${debugApiKey}\"")
+        }
+        create("production") {
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
         }
@@ -108,7 +91,6 @@ android {
         // Indicates that the "BuildConfig" class should be generated, including the custom fields
         // defined above with "buildConfigField":
         buildConfig = true
-
     }
 }
 
