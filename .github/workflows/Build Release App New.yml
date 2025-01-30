@@ -27,13 +27,13 @@ jobs:
            echo $ENCODED_STRING > keystore-b64.txt
            base64 -d keystore-b64.txt > $SIGNING_KEY_STORE_PATH
 
-    - name: Build Release bundle
+    - name: Build Release apk
       env:
         SIGNING_KEY_STORE_PATH: ${{ secrets.SIGNING_KEY_STORE_PATH }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-      run: ./gradlew bundleRelease
+      run: ./gradlew assembleRelease
 
     - name: Create Service Credential File
       env:
@@ -44,4 +44,4 @@ jobs:
       env:
         GOOGLE_SERVICES_JSON: "firebase-app-distribution.json"
         FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"  
-      run: ./gradlew appDistributionUploadRelease         
+      run: ./gradlew appDistributionUploadRelease --artifactPath="app/release/app-release.apk"  
