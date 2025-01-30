@@ -106,7 +106,7 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
             firebaseAppDistribution {
-                artifactType = "AAB"
+                artifactType = "APK"
                 appId = System.getenv("FIREBASE_APP_ID")
                 serviceCredentialsFile = System.getenv("GOOGLE_SERVICES_JSON")
             }
