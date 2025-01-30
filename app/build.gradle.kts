@@ -38,6 +38,15 @@ android {
     val debugApiKey = properties.getProperty("debug.api.key") ?: ""
     val productionApiKey = properties.getProperty("production.api.key") ?: ""
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore.jks")
+            storePassword = System.getenv("SIGNING_KEY_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_STORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             // Enable debug features.
@@ -58,6 +67,7 @@ android {
             // R8 became the default optimizer and obfuscator in 2019, replacing Proguard. It still
             // uses Proguard configuration files.
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     // You must specify a flavor dimension. By default, the flavors defined below will belong to
@@ -98,15 +108,6 @@ android {
         // Indicates that the "BuildConfig" class should be generated, including the custom fields
         // defined above with "buildConfigField":
         buildConfig = true
-    }
-
-    signingConfigs {
-        create("release") {
-            storeFile = file("keystore.jks")
-            storePassword = System.getenv("SIGNING_KEY_PASSWORD")
-            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-            keyPassword = System.getenv("SIGNING_STORE_PASSWORD")
-        }
     }
 }
 
