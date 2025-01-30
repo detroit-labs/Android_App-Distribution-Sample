@@ -93,6 +93,7 @@ android {
                 artifactType = "APK"
                 appId = System.getenv("FIREBASE_APP_ID")
                 serviceCredentialsFile = System.getenv("GOOGLE_SERVICES_JSON")
+                groups = "android-client-stakeholders-team"
             }
         }
     }
