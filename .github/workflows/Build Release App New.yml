@@ -45,4 +45,4 @@ jobs:
       env:
         GOOGLE_SERVICES_JSON: "firebase-app-distribution.json"
         FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"  
-      run: ./gradlew appDistributionUploadRelease
+      run: ./gradlew appDistributionUploadProductionRelease
