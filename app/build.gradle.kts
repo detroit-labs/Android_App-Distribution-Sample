@@ -68,6 +68,15 @@ android {
             // uses Proguard configuration files.
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
+            // Note that the Firebase parameters below may be overridden when executing the gradle
+            // command to send the build to Firebase. For example:
+            // ./gradlew appDistributionUploadDevelopmentRelease --groups="android-qa-team"
+            firebaseAppDistribution {
+                artifactType = "APK"
+                appId = System.getenv("FIREBASE_APP_ID")
+                serviceCredentialsFile = System.getenv("GOOGLE_CREDENTIALS_JSON")
+                groups = "android-qa-team, android-client-stakeholders-team"
+            }
         }
     }
     // You must specify a flavor dimension. By default, the flavors defined below will belong to
@@ -89,13 +98,7 @@ android {
         create("production") {
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
-            firebaseAppDistribution {
-                artifactType = "APK"
-                appId = System.getenv("FIREBASE_APP_ID")
-                serviceCredentialsFile = System.getenv("GOOGLE_CREDENTIALS_JSON")
-                groups = "android-client-stakeholders-team"
-            }
-        }
+         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
