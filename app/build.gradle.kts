@@ -92,7 +92,7 @@ android {
             firebaseAppDistribution {
                 artifactType = "APK"
                 appId = System.getenv("FIREBASE_APP_ID")
-                serviceCredentialsFile = System.getenv("GOOGLE_SERVICES_JSON")
+                serviceCredentialsFile = System.getenv("GOOGLE_CREDENTIALS_JSON")
                 groups = "android-client-stakeholders-team"
             }
         }
