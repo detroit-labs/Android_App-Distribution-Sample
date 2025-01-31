@@ -28,17 +28,21 @@ android {
     There should be a "local.properties" file in the project root folder. It should be saved in
     1Password and not checked into version control.
     For this sample app, it should include the following lines:
-    debug.api.key=debug_api_key_here
+    development.api.key=development_api_key_here
     production.api.key=production_api_key_here
     */
 
     // Load API keys from "local.properties".
     // ("gradleLocalProperties" is a built-in function of the Android Gradle plugin.)
     val properties = gradleLocalProperties(rootDir, providers)
-    val debugApiKey = properties.getProperty("debug.api.key") ?: ""
+    val developmentApiKey = properties.getProperty("development.api.key") ?: ""
     val productionApiKey = properties.getProperty("production.api.key") ?: ""
 
     signingConfigs {
+        // This signing configuration will be utilized by the Gradle commands run by the GitHub
+        // actions that create builds and send them to Firebase. The environment variables
+        // referenced ("SIGNING_KEY_STORE_PATH", etc.) will be set by those GitHub actions, and
+        // their values will come from GitHub secrets.
         create("release") {
             storeFile = file(System.getenv("SIGNING_KEY_STORE_PATH") ?: "keystore.jks")
             storePassword = System.getenv("SIGNING_KEY_PASSWORD")
@@ -92,8 +96,8 @@ android {
             // Note that the third argument has inner (escaped) double quotes. The inner quotes
             // correspond to the quotes that will appear around the string in the generated code for
             // the "BuildConfig" class.
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api-debug\"")
-            buildConfigField("String", "API_KEY", "\"${debugApiKey}\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://my-api-development\"")
+            buildConfigField("String", "API_KEY", "\"${developmentApiKey}\"")
         }
         create("production") {
             buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
