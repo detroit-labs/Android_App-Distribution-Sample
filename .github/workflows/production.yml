@@ -1,4 +1,4 @@
-name: Android CI
+name: Build production and send to Firebase
 
 on: workflow_dispatch
 
@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
 
     steps:
     - uses: actions/checkout@v4
@@ -34,15 +34,15 @@ jobs:
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-      run: ./gradlew assembleDevelopmentRelease
+      run: ./gradlew assembleProductionRelease
 
     - name: Create Service Credential File
       env:
-        SERVICE_CREDENTIAL_STRING: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        SERVICE_CREDENTIAL_STRING: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
       run: echo $SERVICE_CREDENTIAL_STRING > firebase-app-distribution.json
           
     - name: Upload aab to Firebase App Distribution
       env:
         GOOGLE_SERVICES_JSON: "firebase-app-distribution.json"
         FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"  
-      run: ./gradlew appDistributionUploadDevelopmentRelease
+      run: ./gradlew appDistributionUploadProductionRelease
