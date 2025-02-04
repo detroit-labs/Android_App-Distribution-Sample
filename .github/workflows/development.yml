@@ -5,6 +5,7 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
     - uses: actions/checkout@v4
@@ -28,6 +29,8 @@ jobs:
 
     - name: Build Release apk
       env:
+        API_BASE_URL: ${{ vars.API_BASE_URL }}
+        API_KEY: ${{ secrets.API_KEY }}
         SIGNING_KEY_STORE_PATH: ${{ env.SIGNING_KEYSTORE_FILE_PATH }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
@@ -39,5 +42,3 @@ jobs:
       with:
         name: release-artifacts
         path: app/build/outputs/apk/development/release/
-             
-    
