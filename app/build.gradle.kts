@@ -38,8 +38,8 @@ android {
     // ("gradleLocalProperties" is a built-in function of the Android Gradle plugin.)
     val properties = gradleLocalProperties(rootDir, providers)
     val developmentApiBaseUrl = properties.getProperty("development.api.baseurl") ?: System.getenv("API_BASE_URL")
-    val productionApiBaseUrl = properties.getProperty("production.api.baseurl") ?: System.getenv("API_BASE_URL")
     val developmentApiKey = properties.getProperty("development.api.key") ?: System.getenv("API_KEY")
+    val productionApiBaseUrl = properties.getProperty("production.api.baseurl") ?: System.getenv("API_BASE_URL")
     val productionApiKey = properties.getProperty("production.api.key") ?: System.getenv("API_KEY")
 
     signingConfigs {
@@ -57,7 +57,7 @@ android {
 
     /*
     The product flavors and build types defined below will combine to create the following build
-    variants with the following package IDs:
+    variants with the following application IDs:
     developmentDebug   com.detroitlabs.appdistributionsample.development.debug
     developmentRelease com.detroitlabs.appdistributionsample.development
     productionDebug    com.detroitlabs.appdistributionsample.debug
@@ -126,7 +126,7 @@ android {
     buildFeatures {
         compose = true
         // Indicates that the "BuildConfig" class should be generated, including the custom fields
-        // defined above with "buildConfigField":
+        // defined above with "buildConfigField".
         buildConfig = true
     }
 }
