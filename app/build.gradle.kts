@@ -28,15 +28,19 @@ android {
     There should be a "local.properties" file in the project root folder. It should be saved in
     1Password and not checked into version control.
     For this sample app, it should include the following lines:
+    development.api.baseurl=https://my-api-development
     development.api.key=development_api_key_here
+    production.api.baseurl=https://my-api
     production.api.key=production_api_key_here
     */
 
     // Load API keys from "local.properties".
     // ("gradleLocalProperties" is a built-in function of the Android Gradle plugin.)
     val properties = gradleLocalProperties(rootDir, providers)
-    val developmentApiKey = properties.getProperty("development.api.key") ?: ""
-    val productionApiKey = properties.getProperty("production.api.key") ?: ""
+    val developmentApiBaseUrl = properties.getProperty("development.api.baseurl") ?: System.getenv("API_BASE_URL")
+    val productionApiBaseUrl = properties.getProperty("production.api.baseurl") ?: System.getenv("API_BASE_URL")
+    val developmentApiKey = properties.getProperty("development.api.key") ?: System.getenv("API_KEY")
+    val productionApiKey = properties.getProperty("production.api.key") ?: System.getenv("API_KEY")
 
     signingConfigs {
         // This signing configuration will be utilized by the Gradle commands run by the GitHub
@@ -45,12 +49,20 @@ android {
         // their values will come from GitHub secrets.
         create("release") {
             storeFile = file(System.getenv("SIGNING_KEY_STORE_PATH") ?: "keystore.jks")
-            storePassword = System.getenv("SIGNING_KEY_PASSWORD")
+            storePassword = System.getenv("SIGNING_STORE_PASSWORD")
             keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-            keyPassword = System.getenv("SIGNING_STORE_PASSWORD")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
         }
     }
 
+    /*
+    The product flavors and build types defined below will combine to create the following build
+    variants with the following package IDs:
+    developmentDebug   com.detroitlabs.appdistributionsample.development.debug
+    developmentRelease com.detroitlabs.appdistributionsample.development
+    productionDebug    com.detroitlabs.appdistributionsample.debug
+    productionRelease  com.detroitlabs.appdistributionsample
+    */
     buildTypes {
         debug {
             // Enable debug features.
@@ -96,11 +108,11 @@ android {
             // Note that the third argument has inner (escaped) double quotes. The inner quotes
             // correspond to the quotes that will appear around the string in the generated code for
             // the "BuildConfig" class.
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api-development\"")
+            buildConfigField("String", "API_BASE_URL", "\"${developmentApiBaseUrl}\"")
             buildConfigField("String", "API_KEY", "\"${developmentApiKey}\"")
         }
         create("production") {
-            buildConfigField("String", "API_BASE_URL", "\"https://my-api\"")
+            buildConfigField("String", "API_BASE_URL", "\"${productionApiBaseUrl}\"")
             buildConfigField("String", "API_KEY", "\"${productionApiKey}\"")
          }
     }
