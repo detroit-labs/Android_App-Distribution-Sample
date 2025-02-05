@@ -34,4 +34,4 @@ The workflow file is located in the .github/workflows directory. You can modify 
 This repository uses Firebase App Distribution to distribute the app to testers. You can view APK distributed in project "POC Mobile Deployment".
 
 # Contributing
-Contributions are welcome! If you'd like to contribute to this repository, please fork the repository and submit a pull request. For a more extensive expalanation of this repo see [accompaning documentation](https://docs.google.com/document/d/1sK68oUR_sfDC4-dMNgk5eDj2xu7C0Cw29EbtTue45UE/edit?pli=1&tab=t.0)
+Contributions are welcome! If you'd like to contribute to this repository, please fork the repository and submit a pull request. For a more extensive explanation of this repo see [accompaning documentation](https://docs.google.com/document/d/1sK68oUR_sfDC4-dMNgk5eDj2xu7C0Cw29EbtTue45UE/edit?pli=1&tab=t.0)
