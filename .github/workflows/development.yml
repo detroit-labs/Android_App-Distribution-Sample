@@ -1,4 +1,4 @@
-name: Build development and upload to artifacts
+name: Build development and upload to GitHub artifacts
 
 on: workflow_dispatch
 
@@ -12,7 +12,7 @@ jobs:
     - name: set up JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '17' # Must match the version specified in the "compileOptions" block in the Gradle file.
         distribution: 'temurin'
         cache: gradle
 
