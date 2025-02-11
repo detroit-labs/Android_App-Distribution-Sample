@@ -4,7 +4,8 @@ on: workflow_dispatch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # This runs the workflow on any DL self-hosted machine, macOS or Linux.
+    runs-on: self-hosted
     environment: dev
 
     steps:
